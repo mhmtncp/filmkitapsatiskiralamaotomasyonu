@@ -5,7 +5,15 @@ package Properties;
  */
 public class User {
 
-    private String uid, uUserName, uPassword, uFirstname, uLastname, uEmail, uAddress;
+    private String uid, uUserName, uPassword, uFirstname, uLastname, uEmail, uAddress, status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getUid() {
         return uid;

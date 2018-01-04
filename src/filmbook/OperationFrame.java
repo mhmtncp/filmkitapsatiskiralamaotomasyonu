@@ -5,6 +5,9 @@
  */
 package filmbook;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Java_sabah
@@ -16,6 +19,45 @@ public class OperationFrame extends javax.swing.JFrame {
      */
     public OperationFrame() {
         initComponents();
+        ListFilms lf = new ListFilms();
+        ListBooks lb = new ListBooks();
+        System.out.println("PRİCE OPERATION FRAME : " + UserLoginFrame.Price);
+        
+        
+        tblOFFilm.setModel(lf.listFilms());
+        tblOFBook.setModel(lb.listBooks());
+        
+        rbBuy.setSelected(true);
+        rbBuyBook.setSelected(true);
+        if (UserLoginFrame.status == -1) {
+            GuestLogin();
+        } else if (UserLoginFrame.status == 4) {
+            FalseLogin();
+        }
+        
+
+    }
+
+    
+    
+    
+    public void GuestLogin() {
+
+        rbRent.setEnabled(false);
+        rbRentBook.setEnabled(false);
+
+        rbBuy.setSelected(true);
+        rbBuyBook.setSelected(true);
+        
+        tblRentBookReceipt.setVisible(false);
+        tblRentFilmReceipt.setVisible(false);
+        tblRentBookReceipt.setEnabled(false);
+        tblRentFilmReceipt.setEnabled(false);
+        
+    }
+
+    public void FalseLogin() {
+        JOptionPane.showMessageDialog(null, "BOYLE BİR UYE BULUNMAMAKTADIR.");
     }
 
     /**
@@ -28,34 +70,67 @@ public class OperationFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        jButton2 = new javax.swing.JButton();
+        label1 = new java.awt.Label();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         UserFilmPane = new javax.swing.JPanel();
         lblSearchFilm = new javax.swing.JLabel();
         txtOSearchFilm = new javax.swing.JTextField();
         btnOSearchFilm = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        btnAddToCart = new javax.swing.JButton();
+        tblOFFilm = new javax.swing.JTable();
+        btnAddToCartFilm = new javax.swing.JButton();
         rbBuy = new javax.swing.JRadioButton();
         rbRent = new javax.swing.JRadioButton();
         lblOperationAlert = new javax.swing.JLabel();
         UserBookPane = new javax.swing.JPanel();
         lblSearchBook = new javax.swing.JLabel();
         txtOSearchBook = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSearchBook = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblOFBook = new javax.swing.JTable();
         rbBuyBook = new javax.swing.JRadioButton();
         rbRentBook = new javax.swing.JRadioButton();
+        btnAddToCartBook = new javax.swing.JButton();
         UserCartPane = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblBuyFilmReceipt = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblBuyBookReceipt = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblRentFilmReceipt = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblRentBookReceipt = new javax.swing.JTable();
+        btnConfirmOperation = new javax.swing.JButton();
+        btnCartCancelOrder = new javax.swing.JButton();
+
+        jButton2.setText("jButton2");
+
+        label1.setText("label1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         lblSearchFilm.setText("Search Film : ");
 
         btnOSearchFilm.setText("Search");
+        btnOSearchFilm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOSearchFilmActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblOFFilm.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -66,14 +141,24 @@ public class OperationFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblOFFilm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblOFFilmMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblOFFilm);
 
-        btnAddToCart.setText("Add to Cart");
+        btnAddToCartFilm.setText("Add to Cart");
+        btnAddToCartFilm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddToCartFilmActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(rbBuy);
+        buttonGroup2.add(rbBuy);
         rbBuy.setText("Buy");
 
-        buttonGroup1.add(rbRent);
+        buttonGroup2.add(rbRent);
         rbRent.setText("Rent");
 
         javax.swing.GroupLayout UserFilmPaneLayout = new javax.swing.GroupLayout(UserFilmPane);
@@ -81,27 +166,31 @@ public class OperationFrame extends javax.swing.JFrame {
         UserFilmPaneLayout.setHorizontalGroup(
             UserFilmPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UserFilmPaneLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(UserFilmPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(UserFilmPaneLayout.createSequentialGroup()
-                        .addComponent(lblSearchFilm)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtOSearchFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnOSearchFilm)
+                        .addContainerGap()
+                        .addGroup(UserFilmPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+                            .addGroup(UserFilmPaneLayout.createSequentialGroup()
+                                .addComponent(lblSearchFilm)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtOSearchFilm, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(btnOSearchFilm)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(UserFilmPaneLayout.createSequentialGroup()
+                        .addGap(180, 180, 180)
+                        .addComponent(lblOperationAlert, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UserFilmPaneLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+            .addGroup(UserFilmPaneLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
                 .addComponent(rbBuy)
                 .addGap(18, 18, 18)
                 .addComponent(rbRent)
-                .addGap(32, 32, 32)
-                .addComponent(lblOperationAlert, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(btnAddToCart)
-                .addGap(36, 36, 36))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAddToCartFilm)
+                .addGap(56, 56, 56))
         );
         UserFilmPaneLayout.setVerticalGroup(
             UserFilmPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,14 +200,15 @@ public class OperationFrame extends javax.swing.JFrame {
                     .addComponent(lblSearchFilm)
                     .addComponent(txtOSearchFilm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOSearchFilm))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(UserFilmPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddToCart)
-                    .addComponent(rbBuy)
                     .addComponent(rbRent)
-                    .addComponent(lblOperationAlert))
+                    .addComponent(rbBuy)
+                    .addComponent(btnAddToCartFilm))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addComponent(lblOperationAlert)
                 .addContainerGap())
         );
 
@@ -126,9 +216,14 @@ public class OperationFrame extends javax.swing.JFrame {
 
         lblSearchBook.setText("Search Book : ");
 
-        jButton1.setText("Search");
+        btnSearchBook.setText("Search");
+        btnSearchBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchBookActionPerformed(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblOFBook.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -139,13 +234,25 @@ public class OperationFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        tblOFBook.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblOFBookMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblOFBook);
 
         buttonGroup1.add(rbBuyBook);
         rbBuyBook.setText("Buy");
 
         buttonGroup1.add(rbRentBook);
         rbRentBook.setText("Rent");
+
+        btnAddToCartBook.setText("Add to Cart");
+        btnAddToCartBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddToCartBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout UserBookPaneLayout = new javax.swing.GroupLayout(UserBookPane);
         UserBookPane.setLayout(UserBookPaneLayout);
@@ -155,18 +262,23 @@ public class OperationFrame extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(UserBookPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(UserBookPaneLayout.createSequentialGroup()
+                        .addGroup(UserBookPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(UserBookPaneLayout.createSequentialGroup()
+                                .addComponent(lblSearchBook)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtOSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(btnSearchBook)))
+                        .addContainerGap(53, Short.MAX_VALUE))
+                    .addGroup(UserBookPaneLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(rbBuyBook)
                         .addGap(18, 18, 18)
-                        .addComponent(rbRentBook))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(UserBookPaneLayout.createSequentialGroup()
-                        .addComponent(lblSearchBook)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtOSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(jButton1)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addComponent(rbRentBook)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAddToCartBook)
+                        .addGap(46, 46, 46))))
         );
         UserBookPaneLayout.setVerticalGroup(
             UserBookPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,27 +287,163 @@ public class OperationFrame extends javax.swing.JFrame {
                 .addGroup(UserBookPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSearchBook)
                     .addComponent(txtOSearchBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnSearchBook))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(UserBookPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbRentBook)
                     .addComponent(rbBuyBook)
-                    .addComponent(rbRentBook))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(btnAddToCartBook))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("BOOKS", UserBookPane);
+
+        tblBuyFilmReceipt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblBuyFilmReceipt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBuyFilmReceiptMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblBuyFilmReceipt);
+
+        tblBuyBookReceipt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblBuyBookReceipt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBuyBookReceiptMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tblBuyBookReceipt);
+
+        jLabel1.setText("Buy Film");
+
+        jLabel2.setText("Buy Book");
+
+        jLabel3.setText("Rent Film");
+
+        tblRentFilmReceipt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblRentFilmReceipt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRentFilmReceiptMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tblRentFilmReceipt);
+
+        jLabel4.setText("Rent Book");
+
+        tblRentBookReceipt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblRentBookReceipt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRentBookReceiptMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(tblRentBookReceipt);
+
+        btnConfirmOperation.setText("Confirm");
+        btnConfirmOperation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmOperationActionPerformed(evt);
+            }
+        });
+
+        btnCartCancelOrder.setText("Discard");
+        btnCartCancelOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCartCancelOrderActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout UserCartPaneLayout = new javax.swing.GroupLayout(UserCartPane);
         UserCartPane.setLayout(UserCartPaneLayout);
         UserCartPaneLayout.setHorizontalGroup(
             UserCartPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
+            .addGroup(UserCartPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(UserCartPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane5)
+                    .addGroup(UserCartPaneLayout.createSequentialGroup()
+                        .addGroup(UserCartPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(0, 558, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6))
+                .addContainerGap())
+            .addGroup(UserCartPaneLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(btnConfirmOperation, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCartCancelOrder)
+                .addGap(80, 80, 80))
         );
         UserCartPaneLayout.setVerticalGroup(
             UserCartPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 489, Short.MAX_VALUE)
+            .addGroup(UserCartPaneLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(UserCartPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConfirmOperation, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCartCancelOrder))
+                .addGap(4, 4, 4))
         );
 
         jTabbedPane1.addTab("CART", UserCartPane);
@@ -213,12 +461,214 @@ public class OperationFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addComponent(jTabbedPane1))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    static ArrayList<String> buyFilmList = new ArrayList<>();
+    static ArrayList<String> rentFilmList = new ArrayList<>();
+    static ArrayList<String> buyBookList = new ArrayList<>();
+    static ArrayList<String> rentBookList = new ArrayList<>();
+
+    public int buyFilm(String id) {
+        if (buyFilmList.add(id)) {
+            //buyFilmList.add(id);
+            return 1;
+        } else {
+            return 0;
+        }
+        
+
+    }
+    public int rentFilm(String id){
+        if (rentFilmList.add(id)) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    public int buyBook(String id){
+        if (buyBookList.add(id)) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    public int rentBook(String id){
+        System.out.println("RENTBOOK GELEN ID : " + id);
+        if (rentBookList.add(id)) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    public void yazdir(){
+        for (String item : buyFilmList) {
+            System.out.println("ALINAN : " + item);
+        }
+    }
+     /*int getSelection(){
+        if (rbBuy.isSelected() || rbBuyBook.isSelected()) {
+            return 1;
+        }else if (rbRent.isSelected() || rbRentBook.isSelected()) {
+            return 0;
+        }else{
+            return -1;
+        }
+        
+    }*/
+    
+   
+    
+    private void btnAddToCartFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToCartFilmActionPerformed
+        ListReceipt lr = new ListReceipt();
+        
+        if (rbBuy.isSelected()) {
+            buyFilm(fid);
+            JOptionPane.showMessageDialog(null, "FİLM SEPETE EKLENDİ.");
+            yazdir();
+        }else if (rbRent.isSelected()) {
+            rentFilm(fid);
+            JOptionPane.showMessageDialog(null, "KİRALAMA İSLEMİ SEPETE EKLENDİ.");
+        }
+        System.out.println("OperationFrame.buyFilmList " + OperationFrame.buyFilmList);
+        System.out.println("OperationFrame.rentFilmList " + OperationFrame.rentFilmList);
+        
+        tblBuyFilmReceipt.setModel(lr.listBuyFilmReceipt());
+        tblRentFilmReceipt.setModel(lr.listRentFilmReceipt());
+
+       
+    }//GEN-LAST:event_btnAddToCartFilmActionPerformed
+   
+    
+    private void btnSearchBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchBookActionPerformed
+        String searchPattern = txtOSearchBook.getText();
+        Search s  = new Search();
+        tblOFBook.setModel(s.listSearchBooks(searchPattern));
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchBookActionPerformed
+    String fid = "";
+    private void tblOFFilmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOFFilmMouseClicked
+        fid = (String) tblOFFilm.getValueAt(tblOFFilm.getSelectedRow(), 0);
+        System.out.println("FİD : " + fid);
+
+
+    }//GEN-LAST:event_tblOFFilmMouseClicked
+    String bid = "";
+    private void tblOFBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOFBookMouseClicked
+        bid = (String) tblOFBook.getValueAt(tblOFBook.getSelectedRow(), 0);
+        System.out.println("BİD : " + bid);
+        
+
+    }//GEN-LAST:event_tblOFBookMouseClicked
+
+    private void btnAddToCartBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToCartBookActionPerformed
+        ListReceipt lr = new ListReceipt();
+        if (rbBuyBook.isSelected()) {
+            buyBook(bid);
+            JOptionPane.showMessageDialog(null, "KİTAP LİSTENİZE EKLENDİ");
+        }else if(rbRentBook.isSelected()) {
+            rentBook(bid);
+            JOptionPane.showMessageDialog(null, "KİTAP KİRALAMA LİSTESİNE EKLENDİ");
+        }
+        
+        System.out.println("OperationFrame.rentFilmList : " + OperationFrame.rentBookList );
+        tblBuyBookReceipt.setModel(lr.listBuyBookReceipt());
+        tblRentBookReceipt.setModel(lr.listRentBookReceipt());
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddToCartBookActionPerformed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+
+        
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void btnConfirmOperationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmOperationActionPerformed
+        if (UserLoginFrame.status == -1) {
+            GuestOrderInfo gc = new GuestOrderInfo();
+            gc.setVisible(true);
+            
+        }else if (UserLoginFrame.status == 0){
+            UserConfirm uc = new UserConfirm();
+            uc.setVisible(true);
+        }
+
+
+        
+    }//GEN-LAST:event_btnConfirmOperationActionPerformed
+    
+    private void btnOSearchFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOSearchFilmActionPerformed
+        String searchPattern = txtOSearchFilm.getText();
+        Search s = new Search();
+        tblOFFilm.setModel(s.listSearchFilms(searchPattern));
+                
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnOSearchFilmActionPerformed
+    String CartBuyFilmId = "";
+    String CartBuyBookId = "";
+    String CartRentFilmId = "";
+    String CartRentBookId = "";
+    private void btnCartCancelOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartCancelOrderActionPerformed
+        if (!CartBuyFilmId.equals("")) {
+            ListReceipt lr = new ListReceipt();
+            buyFilmList.remove(CartBuyFilmId);
+            CartBuyFilmId = "";
+            tblBuyFilmReceipt.setModel(lr.listBuyFilmReceipt());
+        }else if (!CartBuyBookId.equals("")){
+            ListReceipt lr = new ListReceipt();
+            buyBookList.remove(CartBuyBookId);
+            CartBuyBookId = "";
+            tblBuyBookReceipt.setModel(lr.listBuyBookReceipt());
+        }else if (!CartRentFilmId.equals("")){
+            ListReceipt lr = new ListReceipt();
+            rentFilmList.remove(CartRentFilmId);
+            CartRentFilmId = "";
+            tblRentFilmReceipt.setModel(lr.listRentFilmReceipt());
+        }else if (!CartRentBookId.equals("")){
+            ListReceipt lr = new ListReceipt();
+            rentBookList.remove(CartRentBookId);
+            CartRentBookId = "";
+            tblRentBookReceipt.setModel(lr.listRentBookReceipt());
+        }else if (CartBuyBookId.equals("")&&CartBuyFilmId.equals("")&&CartRentFilmId.equals("")&&CartRentBookId.equals("")){
+            JOptionPane.showMessageDialog(this, "İptal edilecek siparişi seçiniz");
+
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "İptal edilecek siparişi seçiniz");
+        }
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCartCancelOrderActionPerformed
+
+    private void tblBuyFilmReceiptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBuyFilmReceiptMouseClicked
+        CartBuyFilmId = (String) tblBuyFilmReceipt.getValueAt(tblBuyFilmReceipt.getSelectedRow(), 0);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblBuyFilmReceiptMouseClicked
+
+    private void tblBuyBookReceiptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBuyBookReceiptMouseClicked
+        CartBuyBookId = (String) tblBuyBookReceipt.getValueAt(tblBuyBookReceipt.getSelectedRow(), 0);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblBuyBookReceiptMouseClicked
+
+    private void tblRentFilmReceiptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRentFilmReceiptMouseClicked
+       CartRentFilmId = (String) tblRentFilmReceipt.getValueAt(tblRentFilmReceipt.getSelectedRow(), 0);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblRentFilmReceiptMouseClicked
+
+    private void tblRentBookReceiptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRentBookReceiptMouseClicked
+        CartRentBookId = (String) tblRentBookReceipt.getValueAt(tblRentBookReceipt.getSelectedRow(), 0);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblRentBookReceiptMouseClicked
 
     /**
      * @param args the command line arguments
@@ -260,15 +710,27 @@ public class OperationFrame extends javax.swing.JFrame {
     private javax.swing.JPanel UserBookPane;
     private javax.swing.JPanel UserCartPane;
     private javax.swing.JPanel UserFilmPane;
-    private javax.swing.JButton btnAddToCart;
+    private javax.swing.JButton btnAddToCartBook;
+    private javax.swing.JButton btnAddToCartFilm;
+    private javax.swing.JButton btnCartCancelOrder;
+    private javax.swing.JButton btnConfirmOperation;
     private javax.swing.JButton btnOSearchFilm;
+    private javax.swing.JButton btnSearchBook;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private java.awt.Label label1;
     private javax.swing.JLabel lblOperationAlert;
     private javax.swing.JLabel lblSearchBook;
     private javax.swing.JLabel lblSearchFilm;
@@ -276,6 +738,12 @@ public class OperationFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbBuyBook;
     private javax.swing.JRadioButton rbRent;
     private javax.swing.JRadioButton rbRentBook;
+    public static javax.swing.JTable tblBuyBookReceipt;
+    public static javax.swing.JTable tblBuyFilmReceipt;
+    public static javax.swing.JTable tblOFBook;
+    public static javax.swing.JTable tblOFFilm;
+    public static javax.swing.JTable tblRentBookReceipt;
+    public static javax.swing.JTable tblRentFilmReceipt;
     private javax.swing.JTextField txtOSearchBook;
     private javax.swing.JTextField txtOSearchFilm;
     // End of variables declaration//GEN-END:variables

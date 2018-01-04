@@ -169,8 +169,13 @@ public class SignUpFrame extends javax.swing.JFrame {
         String email = txtSEmail.getText();
         String address = txtSAddress.getText();
         
+        
+        int sonuc = 0;
         AddUser au = new AddUser();
-        int sonuc = au.addUser(userName, password, firstName, lastName, email, address);
+        if (validation(userName, password, firstName, lastName, email, address)) {
+            sonuc = au.addUser(userName, password, firstName, lastName, email, address);
+        }
+        
         if(sonuc > 0) {
             JOptionPane.showMessageDialog(null, "Hoşgeldiniz" + firstName + "Hesabınız oluştu.");
            this.setVisible(false);
@@ -183,6 +188,26 @@ public class SignUpFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnSignUpActionPerformed
 
+    boolean validation(String userName,String password,String firstname,String lastName,String email,String address){
+        if (userName.isEmpty()) {
+            lblSignupAlert.setText("KULLANICI ADI GİRİNİZ.");
+        }else if (password.isEmpty()) {
+            lblSignupAlert.setText("SİFRE GİRİNİZ.");
+        }else if (firstname.isEmpty()) {
+            lblSignupAlert.setText("ADINIZI GİRİNİZ.");
+        }else if (lastName.isEmpty()) {
+            lblSignupAlert.setText("SOYADINIZI GİRİNİZ.");
+        }else if (email.isEmpty()) {
+            lblSignupAlert.setText("EMAİL GİRİNİZ.");
+        }else if (address.isEmpty()) {
+            lblSignupAlert.setText("ADRES GİRİNİZ.");
+        }else{
+            return true;
+        }
+        
+        return false;
+    }
+    
     private void txtSPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSPasswordActionPerformed

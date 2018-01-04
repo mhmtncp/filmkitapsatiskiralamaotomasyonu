@@ -5,17 +5,31 @@
  */
 package filmbook;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Java_sabah
  */
 public class UserLoginFrame extends javax.swing.JFrame {
 
+    static int status = 3;
+    static int LoggedInUserId = 0;
+    static String LoggedInUserName = null;
+    static String LoggedInUserLastName = null;
+    static String LoggedInUserAddress = null;
+    static Double Price = 0.0;
+    static String LoggedInUserEmail = null;
+    
+    
     /**
      * Creates new form UserFrame
      */
     public UserLoginFrame() {
         initComponents();
+        if (status == 4) {
+            JOptionPane.showMessageDialog(null, "BOYLE BİR KULLANICI BULUNMAMAKTADIR.");
+        }
     }
 
     /**
@@ -42,6 +56,11 @@ public class UserLoginFrame extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Login"));
 
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         btnSignUp.setText("Sign Up");
         btnSignUp.addActionListener(new java.awt.event.ActionListener() {
@@ -51,6 +70,11 @@ public class UserLoginFrame extends javax.swing.JFrame {
         });
 
         btnGuest.setText("Guest");
+        btnGuest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuestActionPerformed(evt);
+            }
+        });
 
         lblUserName.setText("Username :");
 
@@ -129,6 +153,46 @@ public class UserLoginFrame extends javax.swing.JFrame {
         SignUpFrame suf = new SignUpFrame();
         suf.setVisible(true);
     }//GEN-LAST:event_btnSignUpActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String username = txtUserName.getText();
+        String password = txtPassword.getText();
+        Login l = new Login();
+        
+        l.userLogin(username, password);
+        if (status == 1) {
+            AdminFrame af = new AdminFrame();
+            af.setVisible(true);
+        }else if (status == 0) {
+            OperationFrame of = new OperationFrame();
+            of.setVisible(true);
+        }else if (status == -1) {
+            OperationFrame of = new OperationFrame();
+            of.setVisible(true);
+        }else if (status == 4) {
+            JOptionPane.showMessageDialog(null, "BOYLE BİR KULLANICI BULUNMAMAKTADIR.");
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuestActionPerformed
+        status = -1;
+        LoggedInUserId = 2;
+        
+        OperationFrame of = new OperationFrame();
+        of.setVisible(true);
+        System.out.println("STATUS" + status);
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuestActionPerformed
 
     /**
      * @param args the command line arguments

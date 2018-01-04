@@ -5,6 +5,8 @@
  */
 package filmbook;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Java_sabah
@@ -16,6 +18,14 @@ public class AdminFrame extends javax.swing.JFrame {
      */
     public AdminFrame() {
         initComponents();
+        ListBooks lb = new ListBooks();
+        ListFilms lf = new ListFilms();
+        ListAdminReport lar = new ListAdminReport();
+        tblAFFilm.setModel(lf.listFilms());
+        tblAFBook.setModel(lb.listBooks());
+        tblPurchases.setModel(lar.listPurchases());
+        tblRents.setModel(lar.listRents());
+        
     }
 
     /**
@@ -30,7 +40,7 @@ public class AdminFrame extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblFilm = new javax.swing.JTable();
+        tblAFFilm = new javax.swing.JTable();
         btnAddFilm = new javax.swing.JButton();
         btnDeleteFilm = new javax.swing.JButton();
         txtSearchFilm = new javax.swing.JTextField();
@@ -38,17 +48,24 @@ public class AdminFrame extends javax.swing.JFrame {
         btnSearchFilm = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblBook = new javax.swing.JTable();
+        tblAFBook = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         btnSearchBook = new javax.swing.JButton();
         btnAddBook = new javax.swing.JButton();
         btnDeleteBook = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblPurchases = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblRents = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tblFilm.setModel(new javax.swing.table.DefaultTableModel(
+        tblAFFilm.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,9 +76,19 @@ public class AdminFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblFilm);
+        tblAFFilm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAFFilmMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblAFFilm);
 
         btnAddFilm.setText("Add Film");
+        btnAddFilm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddFilmActionPerformed(evt);
+            }
+        });
 
         btnDeleteFilm.setText("Delete Film");
         btnDeleteFilm.addActionListener(new java.awt.event.ActionListener() {
@@ -107,12 +134,12 @@ public class AdminFrame extends javax.swing.JFrame {
                     .addComponent(txtSearchFilm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(btnSearchFilm))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("FILMS", jPanel1);
 
-        tblBook.setModel(new javax.swing.table.DefaultTableModel(
+        tblAFBook.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -123,15 +150,30 @@ public class AdminFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(tblBook);
+        tblAFBook.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAFBookMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblAFBook);
 
         jLabel2.setText("Search Book :");
 
         btnSearchBook.setText("Search");
 
         btnAddBook.setText("Add Book");
+        btnAddBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddBookActionPerformed(evt);
+            }
+        });
 
         btnDeleteBook.setText("Delete Book");
+        btnDeleteBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteBookActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -159,32 +201,89 @@ public class AdminFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSearchBook)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAddBook)
-                            .addComponent(btnDeleteBook))))
-                .addContainerGap(36, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSearchBook))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAddBook)
+                        .addComponent(btnDeleteBook)))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("BOOKS", jPanel2);
+
+        tblPurchases.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tblPurchases);
+
+        jLabel3.setText("Purchases");
+
+        jLabel4.setText("Rents");
+
+        tblRents.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tblRents);
+
+        jLabel5.setText("Product Type : 0 =  FILM     1 = BOOK");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 672, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)
+                            .addComponent(jScrollPane4))))
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(221, 221, 221))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("REPORT", jPanel3);
@@ -200,7 +299,7 @@ public class AdminFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
@@ -210,8 +309,66 @@ public class AdminFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteFilmActionPerformed
+        DeleteOperation deo = new DeleteOperation();
+        
+        int delete = deo.deleteFilm(id);
+        if (delete > 0) {
+            JOptionPane.showMessageDialog(null, "Film Silindi.");
+            ListFilms lf = new ListFilms();
+            tblAFFilm.setModel(lf.listFilms());
+        }else{
+            JOptionPane.showMessageDialog(null, "FİLM SİLME HATASI.");
+        }
+        
+        
+
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteFilmActionPerformed
+
+    private void btnAddBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBookActionPerformed
+        AddBookFrame abf = new AddBookFrame();
+        abf.setVisible(true);
+
+
+    }//GEN-LAST:event_btnAddBookActionPerformed
+    String id = "";
+    private void btnAddFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFilmActionPerformed
+        AddFilmFrame aff = new AddFilmFrame();
+        aff.setVisible(true);
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddFilmActionPerformed
+
+    private void tblAFFilmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAFFilmMouseClicked
+        id = (String) tblAFFilm.getValueAt(tblAFFilm.getSelectedRow(), 0);
+        System.out.println("ID : " + id);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblAFFilmMouseClicked
+
+    private void btnDeleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteBookActionPerformed
+        DeleteOperation deo = new DeleteOperation();
+        int delete = deo.deleteBook(bid);
+        
+        if (delete > 0 ) {
+            JOptionPane.showMessageDialog(null, "KİTAP SİLME İŞLEMİ BAŞARILI.");
+            ListBooks lb = new ListBooks();
+            tblAFBook.setModel(lb.listBooks());
+        }else{
+            JOptionPane.showMessageDialog(null, "KİTAP SİLİNEMEDİ.");
+        }
+        
+        
+    }//GEN-LAST:event_btnDeleteBookActionPerformed
+    String bid = "";
+    private void tblAFBookMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAFBookMouseClicked
+        bid = (String) tblAFBook.getValueAt(tblAFBook.getSelectedRow(), 0);
+        System.out.println("BİD : " + bid);
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblAFBookMouseClicked
 
     /**
      * @param args the command line arguments
@@ -257,15 +414,22 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnSearchFilm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTable tblBook;
-    private javax.swing.JTable tblFilm;
+    public static javax.swing.JTable tblAFBook;
+    public static javax.swing.JTable tblAFFilm;
+    public static javax.swing.JTable tblPurchases;
+    public static javax.swing.JTable tblRents;
     private javax.swing.JTextField txtSearchFilm;
     // End of variables declaration//GEN-END:variables
 }

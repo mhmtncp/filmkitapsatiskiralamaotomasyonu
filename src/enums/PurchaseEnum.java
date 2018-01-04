@@ -7,10 +7,8 @@ package enums;
 
 /**
  *
- * @author Java_sabah
+ * @author MNK
  */
-public enum UserEnum {
-
-    user_id,user_username ,user_password, user_first_name, user_last_name, user_email, user_address, status;
-
+public enum PurchaseEnum {
+    purchase_id,user_id,product_id,purchase_type,purchase_price,product_type,purchase_date;
 }

@@ -117,6 +117,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Login"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoginActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSignUp">
           <Properties>
@@ -130,6 +133,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Guest"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuestActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblUserName">
           <Properties>
